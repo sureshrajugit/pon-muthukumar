@@ -74,7 +74,7 @@ function buildCarousel(list) {
   });
 
   buildThumbs(list);
-  goToSlide(0);
+  goToSlide(0, true);
 }
 
 function buildThumbs(list) {
@@ -91,7 +91,7 @@ function buildThumbs(list) {
   });
 }
 
-function goToSlide(idx) {
+function goToSlide(idx, skipScroll = false) {
   const slides = document.getElementById('stage').querySelectorAll('.slide-placeholder, img.slide');
   const thumbs = document.getElementById('thumbStrip').querySelectorAll('.thumb');
   slides.forEach(s => s.classList.remove('active'));
@@ -100,7 +100,9 @@ function goToSlide(idx) {
   if (slides[currentIndex]) slides[currentIndex].classList.add('active');
   if (thumbs[currentIndex]) {
     thumbs[currentIndex].classList.add('active');
-    thumbs[currentIndex].scrollIntoView({ behavior:'smooth', inline:'center', block:'nearest' });
+    if (!skipScroll) {
+      thumbs[currentIndex].scrollIntoView({ behavior:'smooth', inline:'center', block:'nearest' });
+    }
   }
   const p = filtered[currentIndex];
   document.getElementById('counter').textContent = (currentIndex+1) + ' / ' + filtered.length;
